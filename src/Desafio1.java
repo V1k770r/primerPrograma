@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Desafio1 {
@@ -18,7 +17,7 @@ public class Desafio1 {
                 
                 Nombre del cliente: %s
                 Tipo de cuenta: %s
-                Saldo disponible: %2f$
+                Saldo disponible: %f$
                 """;
 
         System.out.printf((descripcion) + "%n",nombre,tipoDeCuenta,saldo);
