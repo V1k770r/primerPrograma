@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Desafio1 {
@@ -12,15 +13,26 @@ public class Desafio1 {
         double saldo = 1599.99;
         int opcion = 0;
 
-        String descripcion = """
-                *******************************************
-                
-                Nombre del cliente: %s
-                Tipo de cuenta: %s
-                Saldo disponible: %f$
-                """;
+        System.out.println(saldo);
 
-        System.out.printf((descripcion) + "%n",nombre,tipoDeCuenta,saldo);
+        //<editor-fold desc="Probando otras formas">
+        //        String descripcion = """
+//                *******************************************
+//
+//                Nombre del cliente: %s
+//                Tipo de cuenta: %s
+//                Saldo disponible: %f$
+//                """;
+//
+//        System.out.printf((descripcion) + "%n",nombre,tipoDeCuenta,saldo);
+        //</editor-fold>
+
+             String mensaje= """
+                        Nombre del cliente: %s
+                        Tipo de cuenta: %s
+                        Saldo disponible: %.2f$
+                        """.formatted(nombre, tipoDeCuenta, saldo);
+        System.out.println(mensaje);
 
         //<editor-fold desc="Otra forma de realizarlo">
         //        String nombre3 = “Karla”;
@@ -35,22 +47,25 @@ public class Desafio1 {
 //        System.out.println(mensaje);
         //</editor-fold>
 
-        Scanner sc = new Scanner(System.in);
 
         while (opcion != 9 ){
             String Menu = """
                     ******************************************
-                    **Escriba el numero de la opcion deseada**
+                    **Escriba el número de la opcion deseada**
                     1 - Consultar saldo
                     2 - Retirar
                     3 - Depositar
                     9 - Salir
+                    ******************************************
                     """;
-
             System.out.println(Menu);
-            opcion = sc.nextInt();
+            Scanner sc = new Scanner(System.in);
 
-            sc.nextLine();
+            try{
+                opcion = sc.nextInt();
+            } catch (InputMismatchException e){
+                System.out.println("Valor invalido");
+            }
 
             switch (opcion){
                 case 1:
@@ -58,17 +73,25 @@ public class Desafio1 {
                     break;
                 case 2:
                         System.out.println("Ingrese el monto a retirar");
-                        double saldoRetirar = sc.nextDouble();
-                        if (saldo < saldoRetirar){
-                            System.out.println("Saldo insuficiente");
-                        } else {
-                            saldo -= saldoRetirar;
+                        try{
+                            double saldoRetirar = sc.nextDouble();
+                            if (saldo < saldoRetirar){
+                                System.out.println("Saldo insuficiente");
+                            } else {
+                                saldo -= saldoRetirar;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Ingrese una cantidad válida");
                         }
                         System.out.println("Saldo restante: " + saldo + "$");
                     break;
                 case 3:
                     System.out.println("Ingrese el monto a depositar");
-                    saldo += sc.nextDouble();
+                    try{
+                        saldo += sc.nextDouble();
+                    } catch(Exception e){
+                        System.out.println("Ingrese una cantidad válida");
+                    }
                     System.out.println("Saldo actual: " + saldo + "$");
                     break;
                 case 9:
